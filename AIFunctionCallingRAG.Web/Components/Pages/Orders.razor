@@ -1,0 +1,53 @@
+﻿@page "/orders"
+@using AIFunctionCallingRAG.Web.ApiClients
+@using AIFunctionCallingRAG.Web.Dtos
+
+@if (!_isLoaded)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div id="scrollbox">
+        @foreach (var order in _orders)
+        {
+            var status = order.Status == OrderStatus.Paid ? "paid" : "unpaid";
+            <div class="order">
+                <h3 class="@status">Status: @status.ToUpper()</h3>
+                <div>Details:</div>
+                <ul>
+                    @foreach (var product in order.Products)
+                    {
+                        <li>
+                            <div class="product">
+                                <div class="title">
+                                    <h3>@product.Product.Name</h3>
+                                    <div>@product.Product.Description</div>
+                                </div>
+                                <ul>
+                                    <li>Price: @product.Product.Price $</li>
+                                    <li>Color: @product.Product.Color</li>
+                                    <li>Size: @product.Product.Size</li>
+                                </ul>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    bool _isLoaded;
+    private List<Order> _orders;
+
+    [Inject]
+    public IEshopApi EshopApi { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _orders = await EshopApi.GetOrdersAsync();
+        _isLoaded = true;
+    }
+}

@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-AIFunctionCallingRAG.Workers-a8c04daf-7bdf-4dc1-9672-95ac5578edd5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Qdrant.Client" Version="8.0.2" />
+    <PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.17" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="RestEase" Version="1.6.4" />
+    <PackageReference Include="RestEase.HttpClientFactory" Version="1.6.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AIFunctionCallingRAG.Data\AIFunctionCallingRAG.Data.csproj" />
+    <ProjectReference Include="..\AIFunctionCallingRAG.ServiceDefaults\AIFunctionCallingRAG.ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>

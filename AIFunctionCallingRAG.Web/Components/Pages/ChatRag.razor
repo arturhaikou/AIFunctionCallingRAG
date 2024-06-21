@@ -1,0 +1,86 @@
+﻿
+@page "/chat/rag/hyde"
+@using AIFunctionCallingRAG.Web.ApiClients
+@using AIFunctionCallingRAG.Web.Models
+@using AIFunctionCallingRAG.Web.Services
+@rendermode InteractiveServer
+
+@if (!_isChatting)
+{
+    <p>
+        Enter your name start chatting:
+    </p>
+    <div class="input">
+        <label>User Name:</label>
+        <input type="text" maxlength="32" @bind="@_username" />
+    </div>
+    <button type="button" @onclick="@Init"><span class="oi oi-chat" aria-hidden="true"></span> Chat!</button>
+}
+else
+{
+    <div id="scrollbox">
+        @foreach (var item in _messages)
+        {
+            <div class="@(item.Role == ChatMessageRole.User ? "user" : "assistant")">
+                <div class="name">@item.Name</div>
+                <pre class="msg">@item.Content</pre>
+            </div>
+        }
+        <hr />
+        <textarea class="input-lg" placeholder="enter your comment" @bind="@_newMessage"></textarea>
+        <button class="btn btn-default" @onclick="@(() => SendMessageAsync())">Send</button>
+    </div>
+}
+
+@code {
+    private string _username;
+    private bool _isChatting;
+    private string _openAIKey;
+    private string _model;
+    private HyDeChatService _chatService;
+    private string _newMessage;
+    private readonly List<ChatMessage> _messages = new List<ChatMessage>();
+
+    [Inject]
+    public IEshopApi Api { get; set; }
+
+    [Inject]
+    public IConfiguration Configuration { get; set; }
+
+    private void Init()
+    {
+        var assistantMessage = $"Hello {_username}! I'm an assistant from `Happy Shop`. What would you like to do?";
+
+        var message = new ChatMessage
+            {
+                Role = ChatMessageRole.Assistant,
+                Name = ChatMessageRole.Assistant.ToString(),
+                Content = assistantMessage
+            };
+        _messages.Add(message);
+
+        _chatService = new HyDeChatService(Configuration["AI_KEY"], "gpt-3.5-turbo", Api, assistantMessage);
+        _isChatting = true;
+    }
+
+    private async Task SendMessageAsync()
+    {
+        AddMessage(ChatMessageRole.User, _newMessage, _username);
+        var response = await _chatService.SendMessage(_newMessage);
+
+        AddMessage(ChatMessageRole.Assistant, response, ChatMessageRole.Assistant.ToString());
+        _newMessage = null;
+    }
+
+    private void AddMessage(ChatMessageRole role, string message, string name)
+    {
+        var assistantMessage = new ChatMessage
+            {
+                Content = message,
+                Name = name,
+                Role = role
+            };
+
+        _messages.Add(assistantMessage);
+    }
+}

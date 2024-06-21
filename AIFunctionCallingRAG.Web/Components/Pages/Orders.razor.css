@@ -1,0 +1,24 @@
+﻿.product {
+    background-color: antiquewhite;
+    border: 1px solid black;
+    border-radius: 2px;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.order {
+    border: 2px solid black;
+    margin: 20px;
+}
+
+.paid {
+    background-color: lightgreen;
+}
+
+.unpaid {
+    background-color: orange;
+}
+
+ul {
+    list-style: none;
+}

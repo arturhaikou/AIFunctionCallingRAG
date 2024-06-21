@@ -1,0 +1,41 @@
+﻿@page "/catalog"
+@using AIFunctionCallingRAG.Web.ApiClients
+@using AIFunctionCallingRAG.Web.Dtos
+
+@if (!_isLoaded)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div id="scrollbox">
+        @foreach (var product in _products)
+        {
+            <div class="product">
+                <div class="title">
+                    <h3>@product.Name</h3>
+                    <div>@product.Description</div>
+                </div>
+                <ul>
+                    <li>Price: @product.Price $</li>
+                    <li>Color: @product.Color</li>
+                    <li>Size: @product.Size</li>
+                </ul>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private bool _isLoaded;
+    private List<Product> _products;
+
+    [Inject]
+    public IEshopApi EshopApi { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _products = await EshopApi.GetProductsAsync();
+        _isLoaded = true;
+    }
+}

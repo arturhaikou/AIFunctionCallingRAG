@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>50f073ae-aead-43cd-a498-9e1b3b85a347</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AIFunctionCallingRAG.ApiService\AIFunctionCallingRAG.ApiService.csproj" />
+    <ProjectReference Include="..\AIFunctionCallingRAG.Web\AIFunctionCallingRAG.Web.csproj" />
+    <ProjectReference Include="..\AIFunctionCallingRAG.Workers\AIFunctionCallingRAG.Workers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="8.0.2" />
+    <PackageReference Include="Aspire.Hosting.Qdrant" Version="8.0.2" />
+    <PackageReference Include="Aspire.Hosting.Redis" Version="8.0.2" />
+    <PackageReference Include="Aspire.Hosting.SqlServer" Version="8.0.2" />
+  </ItemGroup>
+
+</Project>
