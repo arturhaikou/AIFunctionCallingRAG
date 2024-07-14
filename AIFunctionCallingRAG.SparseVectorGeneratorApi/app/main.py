@@ -13,3 +13,7 @@ app = FastAPI()
 def create_sparse(payload: RequestPayload):
     indices, values = get_indices_and_values(payload.text)
     return { "indices": indices.tolist(), "values": values.tolist() }
+
+@app.get("/healthcheck")
+def health():
+    return "OK"

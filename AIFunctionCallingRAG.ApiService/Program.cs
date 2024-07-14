@@ -23,7 +23,7 @@ builder.Services.AddTransient<IPaymentService, PaymentService>();
 builder.Services.AddKeyedTransient<SearchService, DenseSearchService>("dense-search");
 builder.Services.AddKeyedTransient<SearchService, HybridSearchService>("hybrid-search");
 builder.Services.AddTransient<OpenAIClient>(options => new(builder.Configuration["AI_KEY"]));
-builder.Services.AddTransient<QdrantClient>(options => new(builder.Configuration["Qdrant:Host"]));
+builder.AddQdrantClient("qdrant");
 builder.Services.AddRestEaseClient<ISparseVectorGeneratorApi>(builder.Configuration["SparseVectorGenerator:Host"]);
 builder.AddRedisClient("redis");
 

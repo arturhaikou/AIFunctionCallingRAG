@@ -70,7 +70,7 @@ namespace AIFunctionCallingRAG.ApiService.Services
                 }).ToList();
             }
 
-            return ranks.OrderByDescending(x => x.Value.Rank).Select(x => x.Value.ScoredPoint).Take(5).ToList();
+            return ranks.OrderByDescending(x => x.Value.Rank).Select(x => x.Value.ScoredPoint).ToList();
         }
     }
 }

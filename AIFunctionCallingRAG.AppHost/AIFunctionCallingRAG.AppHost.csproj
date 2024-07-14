@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AIFunctionCallingRAG.ApiService\AIFunctionCallingRAG.ApiService.csproj" />
+    <ProjectReference Include="..\AIFunctionCallingRAG.Hosting\AIFunctionCallingRAG.Hosting.csproj" IsAspireProjectResource="false"/>
     <ProjectReference Include="..\AIFunctionCallingRAG.Web\AIFunctionCallingRAG.Web.csproj" />
     <ProjectReference Include="..\AIFunctionCallingRAG.Workers\AIFunctionCallingRAG.Workers.csproj" />
   </ItemGroup>
